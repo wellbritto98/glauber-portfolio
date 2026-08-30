@@ -1,0 +1,75 @@
+{
+  "versao": 1,
+  "documentos": {
+    "CLAUDE.md": {
+      "hash": "cec874b8077cbc90",
+      "arquivos": 5,
+      "revisadoEm": "2026-08-30T02:23:29.475Z"
+    },
+    "docs/ARQUITETURA.md": {
+      "hash": "14267064803fe9e3",
+      "arquivos": 79,
+      "revisadoEm": "2026-08-30T02:23:01.729Z"
+    },
+    "docs/OBJETIVO.md": {
+      "hash": "d40bf40fafff3628",
+      "arquivos": 17,
+      "revisadoEm": "2026-08-30T02:23:01.729Z"
+    },
+    "README.md": {
+      "hash": "d43060f3a68c981d",
+      "arquivos": 5,
+      "revisadoEm": "2026-08-30T02:23:01.729Z"
+    },
+    "src/README.md": {
+      "hash": "d3f2df9ec2e750bc",
+      "arquivos": 2,
+      "revisadoEm": "2026-08-30T02:23:01.729Z"
+    },
+    "src/routes/README.md": {
+      "hash": "87c301fc07dcff3e",
+      "arquivos": 14,
+      "revisadoEm": "2026-08-30T02:23:01.729Z"
+    },
+    "src/lib/README.md": {
+      "hash": "ee339b368e4fe80e",
+      "arquivos": 9,
+      "revisadoEm": "2026-08-30T02:23:01.729Z"
+    },
+    "src/hooks/README.md": {
+      "hash": "780028cc8ec2d181",
+      "arquivos": 8,
+      "revisadoEm": "2026-08-30T02:23:01.729Z"
+    },
+    "src/components/README.md": {
+      "hash": "99ec60cb7bdb1316",
+      "arquivos": 28,
+      "revisadoEm": "2026-08-30T02:23:01.729Z"
+    },
+    "src/components/site/README.md": {
+      "hash": "fc4109db90a802da",
+      "arquivos": 6,
+      "revisadoEm": "2026-08-30T02:23:01.729Z"
+    },
+    "src/components/admin/README.md": {
+      "hash": "23d31e10467fb19d",
+      "arquivos": 15,
+      "revisadoEm": "2026-08-30T02:23:01.729Z"
+    },
+    "src/components/ui/README.md": {
+      "hash": "2f9f34d49006e938",
+      "arquivos": 15,
+      "revisadoEm": "2026-08-30T02:23:01.729Z"
+    },
+    "src/styles/README.md": {
+      "hash": "c9b38f6a8c94858e",
+      "arquivos": 1,
+      "revisadoEm": "2026-08-30T02:23:01.729Z"
+    },
+    "scripts/README.md": {
+      "hash": "0f8b388022752f1c",
+      "arquivos": 2,
+      "revisadoEm": "2026-08-30T02:23:01.729Z"
+    }
+  }
+}

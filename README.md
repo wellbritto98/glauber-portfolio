@@ -10,6 +10,21 @@ sem tocar em código.
 Sem backend próprio: tudo roda no navegador, e a segurança fica por conta das
 regras do Firestore e do Storage.
 
+## Documentação
+
+Este arquivo cobre instalação, operação e o guia do painel. A documentação
+técnica oficial — usada também como base para desenvolvimento assistido por
+agentes de IA — está em:
+
+- [`docs/OBJETIVO.md`](docs/OBJETIVO.md) — propósito, atores, fluxos de negócio;
+- [`docs/ARQUITETURA.md`](docs/ARQUITETURA.md) — padrões, regras, riscos, diretrizes;
+- `README.md` dentro de cada módulo de `src/` e em `scripts/`;
+- [`CLAUDE.md`](CLAUDE.md) — instruções operacionais para agentes.
+
+A documentação é verificada por código: `npm run docs:check` mostra quais
+documentos descrevem código que mudou desde a última revisão, e
+`npm run docs:update -- <arquivo>` registra a revisão feita.
+
 ## Stack
 
 React 19 · TypeScript 7 · Vite 8 · Tailwind CSS 4 · TanStack Router, Query,
@@ -67,6 +82,13 @@ Este é o único usuário que consegue escrever qualquer coisa.
 > regras falham fechadas de propósito: é o comportamento seguro, e o erro que
 > você vê no painel (`permission-denied`) indica exatamente este passo pendente.
 
+> **Atenção — os dois arquivos estão divergentes hoje.** `firestore.rules` usa
+> `m6xE8kd3vpebcXgUT08qlbIeN8l2` e `storage.rules` usa
+> `Cty5hwrChLVMBv7aPHtC4HhjBx42`. Como só um deles pode ser o UID real do
+> usuário, um dos dois lados nega escrita: publicar um projeto com imagem falha
+> em metade do fluxo. Confira o UID em **Authentication → Users**, alinhe os dois
+> arquivos e republique com `npm run deploy:rules`.
+
 ## 3. Preencher o `.env.local`
 
 Copie o modelo e preencha com os valores do `firebaseConfig`:
@@ -112,6 +134,8 @@ npm run analyze      # build + relatório de bundle em stats.html
 npm run emulators    # emuladores locais do Firebase
 npm run deploy       # build + deploy completo
 npm run deploy:rules # publicar só as regras e os índices
+npm run docs:check   # documentação que precisa de revisão
+npm run docs:update  # registrar documentação revisada
 ```
 
 Os emuladores precisam de um JDK instalado:
@@ -167,13 +191,17 @@ Para resolver de verdade seria preciso gerar HTML por projeto no build
 tags certas aos robôs. Ambos são acréscimos consideráveis e ficaram fora do
 escopo atual.
 
-O que está feito: `index.html` traz título, descrição e imagem padrão do site,
-então qualquer link compartilhado mostra um cartão correto do portfólio — só
-não específico do projeto.
+O que está feito: `index.html` traz o título e a descrição padrão do site, então
+qualquer link compartilhado mostra um cartão com o texto correto do portfólio —
+só não específico do projeto. Ele **não** declara tags `og:` próprias, inclusive
+`og:image`: a imagem que cada rede escolher vem do que ela encontrar na página.
 
 ---
 
 ## Estrutura
+
+Cada diretório abaixo tem um `README.md` próprio, com objetivo, dependências,
+fluxos, arquivos críticos e débitos identificados.
 
 ```
 src/
@@ -190,7 +218,10 @@ src/
     upload.ts        compressão, miniatura, progresso, cancelamento, exclusão
     converters.ts    única camada Timestamp -> Date
     queryKeys.ts     todas as chaves de cache
-scripts/seed.ts      conteúdo de exemplo
+scripts/
+  seed.ts            conteúdo de exemplo
+  docs-check.mjs     verificador de frescor da documentação
+docs/                documentação técnica oficial (arquitetura e objetivo)
 firestore.rules      leitura pública do publicado; escrita só do admin
 storage.rules        leitura pública das imagens; escrita só do admin
 ```

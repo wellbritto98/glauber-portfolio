@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PROJECT_DIR:-.}/scripts/docs-check.mjs\" --hook 2>/dev/null || true",
+            "timeout": 20,
+            "statusMessage": "Conferindo frescor da documentação..."
+          }
+        ]
+      }
+    ]
+  }
+}
