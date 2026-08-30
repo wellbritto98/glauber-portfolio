@@ -6,6 +6,7 @@ import { SiteLayout } from '@/components/site/SiteLayout'
 import { ImagemResponsiva } from '@/components/site/ImagemResponsiva'
 import { Lightbox } from '@/components/site/Lightbox'
 import { EstadoErro, EsqueletoLinha } from '@/components/site/Estado'
+import { obterClasseSpan } from '@/components/site/gridSpan'
 import { cn } from '@/lib/utils'
 import type { Project, Section } from '@/lib/schemas'
 
@@ -110,22 +111,34 @@ function ProjetoPage() {
 
         {galeria.length > 0 && (
           <div className="mx-auto mt-16 max-w-6xl px-6 pb-24 sm:mt-20">
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+            <div className="flex items-baseline justify-between border-b border-rule pb-3.5">
+              <h2 className="font-body text-xs uppercase tracking-wider text-ink-faint">Galeria</h2>
+              <span className="font-body text-xs uppercase tracking-wider text-ink-faint">
+                {galeria.length.toString().padStart(2, '0')}{' '}
+                {galeria.length === 1 ? 'peça' : 'peças'}
+              </span>
+            </div>
+            <div className="mt-8 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-14">
               {galeria.map((imagem, indice) => (
                 <button
                   key={imagem.path}
                   type="button"
                   onClick={() => setIndiceLightbox(indice)}
-                  className="group block w-full text-left"
+                  className={cn('group block w-full text-left', obterClasseSpan(indice))}
                   aria-label={`Ampliar imagem: ${imagem.alt || projeto.title}`}
                 >
                   <ImagemResponsiva
                     imagem={imagem}
-                    className="object-cover transition-opacity duration-300 group-hover:opacity-90"
+                    className="transition-opacity duration-300 group-hover:opacity-90"
                   />
-                  {imagem.caption && (
-                    <p className="mt-2 font-body text-xs text-ink-faint">{imagem.caption}</p>
-                  )}
+                  <div className="mt-2.5 flex items-baseline justify-between gap-4">
+                    {imagem.caption && (
+                      <p className="font-body text-xs text-ink-faint">{imagem.caption}</p>
+                    )}
+                    <span className="ml-auto shrink-0 font-body text-xs uppercase tracking-wider text-ink-faint">
+                      {(indice + 1).toString().padStart(2, '0')}
+                    </span>
+                  </div>
                 </button>
               ))}
             </div>

@@ -131,8 +131,8 @@ listagem sem usar o botão do navegador, para não ficar preso na página.
 | PROJ-02 | P1: Ficha e capa | Execute | Implementing |
 | PROJ-03 | P1: Ficha e capa | Execute | Implementing |
 | PROJ-04 | P1: Ficha e capa | Execute | Implementing |
-| PROJ-05 | P1: Galeria | Execute | Pending |
-| PROJ-06 | P1: Galeria | Execute | Pending |
+| PROJ-05 | P1: Galeria | Execute | Implementing |
+| PROJ-06 | P1: Galeria | Execute | Implementing |
 | PROJ-07 | P2: Orientação | Execute | Pending |
 | PROJ-08 | P2: Orientação | Execute | Pending |
 | PROJ-09 | Edge cases | Execute | Pending |
