@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { createFileRoute, Link } from '@tanstack/react-router'
+import { ChevronRight } from 'lucide-react'
 import { useProject } from '@/hooks/useProject'
 import { useSections } from '@/hooks/useSections'
 import { SiteLayout } from '@/components/site/SiteLayout'
@@ -79,7 +80,29 @@ function ProjetoPage() {
 
       <article>
         <header className="mx-auto max-w-6xl px-6 pt-16 sm:pt-24">
-          <h1 className="text-balance font-display text-4xl font-extrabold tracking-tight text-ink sm:text-6xl">
+          <nav aria-label="Trilha de navegação" className="flex items-center gap-2.5">
+            <Link
+              to="/projetos"
+              search={{}}
+              className="font-body text-xs uppercase tracking-wider text-ink-faint transition-colors hover:text-ink"
+            >
+              Projetos
+            </Link>
+            {secao && (
+              <>
+                <ChevronRight size={14} className="text-ink-faint" aria-hidden="true" />
+                <Link
+                  to="/projetos"
+                  search={{ secao: secao.slug }}
+                  className="font-body text-xs uppercase tracking-wider text-brand transition-colors hover:text-ink"
+                >
+                  {secao.name}
+                </Link>
+              </>
+            )}
+          </nav>
+
+          <h1 className="mt-7 text-balance font-display text-4xl font-extrabold tracking-tight text-ink sm:text-6xl">
             {projeto.title}
           </h1>
 
