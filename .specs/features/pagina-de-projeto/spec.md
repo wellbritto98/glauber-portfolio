@@ -134,8 +134,8 @@ listagem sem usar o botão do navegador, para não ficar preso na página.
 | PROJ-05 | P1: Galeria | Execute | Implementing |
 | PROJ-06 | P1: Galeria | Execute | Implementing |
 | PROJ-07 | P2: Orientação | Execute | Implementing |
-| PROJ-08 | P2: Orientação | Execute | Pending |
-| PROJ-09 | Edge cases | Execute | Pending |
+| PROJ-08 | P2: Orientação | Execute | Implementing |
+| PROJ-09 | Edge cases | Execute | Implementing |
 
 **Mapa dos IDs:**
 

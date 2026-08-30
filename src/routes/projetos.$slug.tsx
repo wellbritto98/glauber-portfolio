@@ -168,21 +168,24 @@ function ProjetoPage() {
           </div>
         )}
 
-        {(anterior || proximo) && (
-          <nav className="border-t border-rule" aria-label="Navegação entre projetos">
+        <nav className="border-t border-rule" aria-label="Navegação entre projetos">
+          {(anterior || proximo) && (
             <div className="mx-auto grid max-w-6xl grid-cols-1 sm:grid-cols-2">
               {anterior ? (
                 <Link
                   to="/projetos/$slug"
                   params={{ slug: anterior.slug }}
-                  className="border-b border-rule px-6 py-10 transition-colors hover:text-brand sm:border-b-0 sm:border-r sm:py-16"
+                  className="flex items-center gap-5 border-b border-rule px-6 py-8 transition-colors hover:text-brand sm:border-b-0 sm:border-r sm:py-10"
                 >
-                  <span className="font-body text-xs uppercase tracking-wider text-ink-faint">
-                    Anterior
+                  <MiniaturaVizinha projeto={anterior} />
+                  <span>
+                    <span className="font-body text-xs uppercase tracking-wider text-ink-faint">
+                      Anterior
+                    </span>
+                    <span className="mt-1 block font-display text-xl font-semibold tracking-tight">
+                      {anterior.title}
+                    </span>
                   </span>
-                  <p className="mt-2 font-display text-xl font-semibold tracking-tight">
-                    {anterior.title}
-                  </p>
                 </Link>
               ) : (
                 <div />
@@ -191,21 +194,33 @@ function ProjetoPage() {
                 <Link
                   to="/projetos/$slug"
                   params={{ slug: proximo.slug }}
-                  className="px-6 py-10 text-right transition-colors hover:text-brand sm:py-16"
+                  className="flex items-center justify-end gap-5 px-6 py-8 text-right transition-colors hover:text-brand sm:py-10"
                 >
-                  <span className="font-body text-xs uppercase tracking-wider text-ink-faint">
-                    Próximo
+                  <span>
+                    <span className="font-body text-xs uppercase tracking-wider text-ink-faint">
+                      Próximo
+                    </span>
+                    <span className="mt-1 block font-display text-xl font-semibold tracking-tight">
+                      {proximo.title}
+                    </span>
                   </span>
-                  <p className="mt-2 font-display text-xl font-semibold tracking-tight">
-                    {proximo.title}
-                  </p>
+                  <MiniaturaVizinha projeto={proximo} />
                 </Link>
               ) : (
                 <div />
               )}
             </div>
-          </nav>
-        )}
+          )}
+          <div className={cn('text-center', (anterior || proximo) && 'border-t border-rule')}>
+            <Link
+              to="/projetos"
+              search={{}}
+              className="inline-flex h-14 items-center font-body text-xs uppercase tracking-wider text-ink transition-colors hover:text-brand"
+            >
+              Ver todos os projetos
+            </Link>
+          </div>
+        </nav>
       </article>
 
       <Lightbox
@@ -292,5 +307,16 @@ function FichaTecnica({
         </ul>
       )}
     </div>
+  )
+}
+
+/** Miniatura da capa do projeto vizinho. Sem capa, o bloco vai só com o texto. */
+function MiniaturaVizinha({ projeto }: { projeto: Project }) {
+  if (!projeto.coverImage) return null
+
+  return (
+    <span className="block h-14 w-20 shrink-0 overflow-hidden bg-surface sm:h-16 sm:w-24">
+      <ImagemResponsiva imagem={projeto.coverImage} usarThumb preencher />
+    </span>
   )
 }
