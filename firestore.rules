@@ -1,0 +1,58 @@
+rules_version = '2';
+
+// ============================================================================
+//  Regras de segurança do Firestore — portfólio
+//
+//  Modelo: leitura pública restrita ao conteúdo publicado; escrita exclusiva
+//  do UID do administrador. Não existe nenhuma regra `if true` para escrita.
+// ============================================================================
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ------------------------------------------------------------------
+    //  UID DO ADMINISTRADOR
+    //
+    //  Onde encontrar: Firebase Console > Authentication > aba "Users" >
+    //  coluna "Identificador do usuário" (User UID) do usuário do designer.
+    //
+    //  Enquanto o valor abaixo for o texto placeholder, NENHUMA escrita é
+    //  permitida — as regras falham fechadas, que é o comportamento seguro.
+    //  Depois de substituir, publique com:  npm run deploy:rules
+    // ------------------------------------------------------------------
+    function adminUid() {
+      return 'm6xE8kd3vpebcXgUT08qlbIeN8l2';
+    }
+
+    function isAdmin() {
+      return request.auth != null && request.auth.uid == adminUid();
+    }
+
+    // Seções: o público só enxerga as visíveis.
+    // A consulta do site precisa incluir where('visible','==',true),
+    // senão o Firestore recusa a listagem inteira.
+    match /sections/{sectionId} {
+      allow read: if resource.data.visible == true || isAdmin();
+      allow create, update, delete: if isAdmin();
+    }
+
+    // Projetos: o público só enxerga os publicados.
+    // Rascunhos (status == 'draft') são invisíveis fora do painel.
+    match /projects/{projectId} {
+      allow read: if resource.data.status == 'published' || isAdmin();
+      allow create, update, delete: if isAdmin();
+    }
+
+    // Configurações do site: apenas o documento único settings/site é público.
+    match /settings/{docId} {
+      allow read: if docId == 'site';
+      allow create, update, delete: if isAdmin();
+    }
+
+    // Qualquer outra coleção permanece inacessível.
+    // O Firestore já nega por padrão; a regra explícita documenta a intenção.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

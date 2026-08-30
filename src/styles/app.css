@@ -1,0 +1,221 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/bricolage-grotesque";
+@import "@fontsource-variable/public-sans";
+
+/* O modo escuro é aplicado no WRAPPER do site público, nunca no <html>.
+   Motivo: os componentes do shadcn usam utilitários `dark:` (o button sozinho
+   tem nove). Se `.dark` ficasse no <html>, o painel admin herdaria estilos
+   escuros mesmo com as variáveis redeclaradas para claro. Com a classe no
+   wrapper, a subárvore do /admin simplesmente nunca é descendente de `.dark`. */
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  /* ---- Tipografia ---- */
+  --font-display: 'Bricolage Grotesque Variable', 'Public Sans Variable', system-ui, sans-serif;
+  --font-body: 'Public Sans Variable', system-ui, -apple-system, sans-serif;
+  --font-sans: var(--font-body);
+  --font-heading: var(--font-display);
+
+  /* ---- Paleta do site público ---- */
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-faint: var(--ink-faint);
+  --color-rule: var(--rule);
+  --color-brand: var(--brand);
+
+  /* ---- Tokens do shadcn (painel admin) ---- */
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+  /* Site público — claro. Branco levemente quente (croma <= 0.004),
+     preto quente, e um acento terracota discreto: a cor forte vem do
+     trabalho do designer, não da interface. */
+  --paper: oklch(0.985 0.003 85);
+  --surface: oklch(0.962 0.004 85);
+  --ink: oklch(0.185 0.008 60);
+  --ink-muted: oklch(0.475 0.007 60);
+  --ink-faint: oklch(0.555 0.005 60);
+  --rule: oklch(0.898 0.004 70);
+  --brand: oklch(0.55 0.15 38);
+
+  /* shadcn — admin (sempre claro) */
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+/* Só as variáveis do site público mudam no escuro. */
+.dark {
+  --paper: oklch(0.165 0.005 70);
+  --surface: oklch(0.215 0.006 70);
+  --ink: oklch(0.952 0.004 85);
+  --ink-muted: oklch(0.705 0.006 75);
+  --ink-faint: oklch(0.585 0.006 70);
+  --rule: oklch(0.305 0.006 70);
+  --brand: oklch(0.72 0.135 42);
+}
+
+/* Pinta o fundo do documento para que o overscroll e a barra do navegador
+   acompanhem o tema, sem colocar `.dark` no <html> (ver nota acima). */
+html[data-site-theme='dark'] {
+  background-color: oklch(0.165 0.005 70);
+  color-scheme: dark;
+}
+html[data-site-theme='light'] {
+  background-color: oklch(0.985 0.003 85);
+  color-scheme: light;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply font-body antialiased;
+    background-color: var(--paper);
+    color: var(--ink);
+  }
+  /* Títulos do site público usam a display; o admin sobrescreve no wrapper. */
+  ::selection {
+    background-color: var(--brand);
+    color: var(--paper);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Animações de entrada do site público.
+
+   Substituem o que antes era feito com a biblioteca `motion`: são um fade com
+   deslocamento de poucos pixels, que o CSS faz nativamente. A biblioteca
+   custava 119 kB no bundle do visitante para produzir exatamente isto.
+   --------------------------------------------------------------------------- */
+
+@keyframes surgir {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Entrada na montagem (cabeçalho da home). */
+.surgir {
+  animation: surgir 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Revelação ao entrar na viewport (cards de projeto). */
+.revelar {
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.revelar[data-visivel='true'] {
+  opacity: 1;
+  transform: none;
+}
+
+/* Sob preferência por menos movimento, o conteúdo aparece sem animar.
+   A regra global mais abaixo zera as durações, mas o estado inicial de
+   `.revelar` é opacity 0 — então ele precisa ser anulado explicitamente,
+   senão um card que nunca dispara o observador ficaria invisível. */
+@media (prefers-reduced-motion: reduce) {
+  .surgir {
+    animation: none;
+  }
+  .revelar {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Respeita a preferência do sistema por menos movimento. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

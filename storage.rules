@@ -1,0 +1,44 @@
+rules_version = '2';
+
+// ============================================================================
+//  Regras de segurança do Storage — portfólio
+//
+//  As imagens precisam ser legíveis por qualquer visitante (é um site
+//  público). A leitura liberada está escopada APENAS aos dois caminhos de
+//  imagem abaixo — não existe curinga de leitura para o bucket inteiro, e
+//  não existe nenhuma regra de escrita aberta.
+// ============================================================================
+
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // Mesmo UID do firestore.rules. Ver instruções lá.
+    function adminUid() {
+      return 'Cty5hwrChLVMBv7aPHtC4HhjBx42';
+    }
+
+    function isAdmin() {
+      return request.auth != null && request.auth.uid == adminUid();
+    }
+
+    // O upload já chega comprimido em WebP; 10 MB é folga generosa.
+    function isValidImage() {
+      return request.resource.contentType.matches('image/.*')
+          && request.resource.size < 10 * 1024 * 1024;
+    }
+
+    // Capas e galerias dos projetos.
+    match /projects/{projectId}/{fileName} {
+      allow read: if true;
+      allow create, update: if isAdmin() && isValidImage();
+      allow delete: if isAdmin();
+    }
+
+    // Foto de perfil e imagem de compartilhamento do site.
+    match /settings/{fileName} {
+      allow read: if true;
+      allow create, update: if isAdmin() && isValidImage();
+      allow delete: if isAdmin();
+    }
+  }
+}
