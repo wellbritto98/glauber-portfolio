@@ -44,8 +44,11 @@ para o login, que dispararia o guard de novo: laço infinito. Traduz os códigos
 Firebase com `mensagemDeErroDeLogin`.
 
 **`projetos.$slug.tsx`** — `useProject(slug)` deriva o projeto e os vizinhos da
-lista já em cache. Ordena a galeria por `order`, monta as tags `og:` da rota e
-controla o índice do `Lightbox`.
+lista já em cache; `useSections()` resolve o nome da seção para o breadcrumb e
+para a ficha técnica, e a página renderiza sem esse trecho se a consulta falhar
+ou a seção estiver oculta. Ordena a galeria por `order`, reaproveita
+`obterClasseSpan` para o ritmo da grade, monta as tags `og:` da rota e controla o
+índice do `Lightbox`.
 
 **`admin.projetos.novo.tsx`** — gera `novoProjectId()` **uma única vez**
 (`useState(() => ...)`). Um id novo a cada render romperia o vínculo com imagens

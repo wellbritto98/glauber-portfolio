@@ -38,9 +38,9 @@ feature). Decisões de projeto vão para `.specs/STATE.md`.
    uma tarefa ser dada como pronta. A primeira feature que precise desse portão
    deve introduzir o runner como tarefa explícita da própria spec, e dizer isso
    ao usuário em vez de fingir que o portão existe.
-2. **Não há repositório git** (`.git` ausente). Commits atômicos por tarefa e
-   `check_commit.py` não têm como operar. Antes de iniciar uma feature pelo fluxo
-   completo, proponha `git init` ao usuário.
+2. **O repositório git existe.** Commits atômicos por tarefa e `check_commit.py`
+   operam normalmente. Branch padrão `main`; comece uma feature em branch
+   própria. `git push` continua exigindo autorização explícita (ver §5).
 
 ---
 
@@ -124,7 +124,8 @@ diretório tem seu próprio README.
   (`Cty5hwrChLVMBv7aPHtC4HhjBx42`), apesar do comentário dizer que são o mesmo.
   Um dos lados nega escrita ao usuário real. Trocar um UID de regra é ação
   externa e irreversível na prática — confirme com o usuário antes.
-- **`settings.seo.*` e `project.tags` são gravados e nunca lidos** pelo site.
+- **`settings.seo.*` é gravado e nunca lido** pelo site. `project.tags` deixou de
+  ser: aparece como chips na ficha técnica de `/projetos/$slug`.
 - **Open Graph por projeto não funciona** — robôs leem o HTML cru.
 
 ---

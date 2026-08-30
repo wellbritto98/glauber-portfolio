@@ -320,11 +320,11 @@ Firebase. Confira o UID em Authentication → Users e alinhe os dois arquivos.
   editáveis na aba *Compartilhamento* (`admin.configuracoes.tsx`), mas nenhuma
   rota pública os consome — `index.tsx` traz `<title>` e `description` fixos, e
   `index.html` não tem tags `og:`. O designer preenche e nada muda.
-- `project.tags` é editado (`CampoDeTags`) e persistido, mas nenhum componente do
-  site público o exibe.
+Isso é dívida funcional, não bug de código: a tela cumpre o que promete gravar,
+mas o site não usa o que foi gravado.
 
-Isso é dívida funcional, não bug de código: as telas cumprem o que prometem
-gravar, mas o site não usa o que foi gravado.
+`project.tags` saiu desta lista: desde o redesenho de `/projetos/$slug`, as tags
+aparecem como chips na ficha técnica do projeto.
 
 ### 8.3 Open Graph por rota é estruturalmente impossível hoje
 

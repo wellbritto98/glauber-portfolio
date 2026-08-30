@@ -127,15 +127,15 @@ listagem sem usar o botão do navegador, para não ficar preso na página.
 
 | Requirement ID | Story | Phase | Status |
 | --- | --- | --- | --- |
-| PROJ-01 | P1: Ficha e capa | Execute | Implementing |
-| PROJ-02 | P1: Ficha e capa | Execute | Implementing |
-| PROJ-03 | P1: Ficha e capa | Execute | Implementing |
-| PROJ-04 | P1: Ficha e capa | Execute | Implementing |
-| PROJ-05 | P1: Galeria | Execute | Implementing |
-| PROJ-06 | P1: Galeria | Execute | Implementing |
-| PROJ-07 | P2: Orientação | Execute | Implementing |
-| PROJ-08 | P2: Orientação | Execute | Implementing |
-| PROJ-09 | Edge cases | Execute | Implementing |
+| PROJ-01 | P1: Ficha e capa | Execute | Verified |
+| PROJ-02 | P1: Ficha e capa | Execute | Verified |
+| PROJ-03 | P1: Ficha e capa | Execute | Verified |
+| PROJ-04 | P1: Ficha e capa | Execute | Verified |
+| PROJ-05 | P1: Galeria | Execute | Verified |
+| PROJ-06 | P1: Galeria | Execute | Verified |
+| PROJ-07 | P2: Orientação | Execute | Verified |
+| PROJ-08 | P2: Orientação | Execute | Verified |
+| PROJ-09 | Edge cases | Execute | Verified |
 
 **Mapa dos IDs:**
 

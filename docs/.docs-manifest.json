@@ -2,14 +2,14 @@
   "versao": 1,
   "documentos": {
     "CLAUDE.md": {
-      "hash": "cec874b8077cbc90",
+      "hash": "c8e628cf86295cbe",
       "arquivos": 5,
-      "revisadoEm": "2026-08-30T02:23:29.475Z"
+      "revisadoEm": "2026-08-30T22:06:20.803Z"
     },
     "docs/ARQUITETURA.md": {
-      "hash": "14267064803fe9e3",
+      "hash": "3f3a3fdefb6b050b",
       "arquivos": 79,
-      "revisadoEm": "2026-08-30T02:23:01.729Z"
+      "revisadoEm": "2026-08-30T22:06:20.803Z"
     },
     "docs/OBJETIVO.md": {
       "hash": "d40bf40fafff3628",
@@ -27,9 +27,9 @@
       "revisadoEm": "2026-08-30T02:23:01.729Z"
     },
     "src/routes/README.md": {
-      "hash": "87c301fc07dcff3e",
+      "hash": "d5296e659d0d73bb",
       "arquivos": 14,
-      "revisadoEm": "2026-08-30T02:23:01.729Z"
+      "revisadoEm": "2026-08-30T22:06:20.803Z"
     },
     "src/lib/README.md": {
       "hash": "ee339b368e4fe80e",
