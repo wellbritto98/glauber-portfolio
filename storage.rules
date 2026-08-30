@@ -14,7 +14,7 @@ service firebase.storage {
 
     // Mesmo UID do firestore.rules. Ver instruções lá.
     function adminUid() {
-      return 'Cty5hwrChLVMBv7aPHtC4HhjBx42';
+      return 'm6xE8kd3vpebcXgUT08qlbIeN8l2';
     }
 
     function isAdmin() {
