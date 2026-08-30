@@ -1,10 +1,13 @@
 import { useState } from 'react'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { useProject } from '@/hooks/useProject'
+import { useSections } from '@/hooks/useSections'
 import { SiteLayout } from '@/components/site/SiteLayout'
 import { ImagemResponsiva } from '@/components/site/ImagemResponsiva'
 import { Lightbox } from '@/components/site/Lightbox'
 import { EstadoErro, EsqueletoLinha } from '@/components/site/Estado'
+import { cn } from '@/lib/utils'
+import type { Project, Section } from '@/lib/schemas'
 
 export const Route = createFileRoute('/projetos/$slug')({
   component: ProjetoPage,
@@ -13,6 +16,9 @@ export const Route = createFileRoute('/projetos/$slug')({
 function ProjetoPage() {
   const { slug } = Route.useParams()
   const { data, isPending, isError, error, refetch } = useProject(slug)
+  // A seção é dado secundário: se a consulta falhar ou a seção estiver oculta,
+  // a página continua inteira, só sem o nome da seção.
+  const { data: secoes } = useSections()
   const [indiceLightbox, setIndiceLightbox] = useState<number | null>(null)
 
   if (isPending) {
@@ -21,7 +27,7 @@ function ProjetoPage() {
         <div className="mx-auto max-w-6xl px-6 py-16 sm:py-24">
           <EsqueletoLinha largura="w-1/4" altura="h-3" />
           <EsqueletoLinha largura="w-2/3" altura="h-12" className="mt-4" />
-          <div className="mt-10 animate-pulse bg-surface sm:mt-16" style={{ aspectRatio: '16 / 10' }} />
+          <div className="mt-10 animate-pulse bg-surface sm:mt-16" style={{ aspectRatio: '3 / 2' }} />
         </div>
       </SiteLayout>
     )
@@ -56,9 +62,10 @@ function ProjetoPage() {
   }
 
   const { projeto, anterior, proximo } = data
-  const metadados = [projeto.client, projeto.year, projeto.role].filter(Boolean)
+  const secao = secoes?.find((item) => item.id === projeto.sectionId)
   const galeria = [...projeto.gallery].sort((a, b) => a.order - b.order)
   const descricaoResumida = projeto.description.replace(/\s+/g, ' ').trim().slice(0, 160)
+  const temDescricao = projeto.description.trim().length > 0
 
   return (
     <SiteLayout>
@@ -74,31 +81,35 @@ function ProjetoPage() {
           <h1 className="text-balance font-display text-4xl font-extrabold tracking-tight text-ink sm:text-6xl">
             {projeto.title}
           </h1>
-          {metadados.length > 0 && (
-            <p className="mt-4 font-body text-xs uppercase tracking-wider text-ink-faint">
-              {metadados.join(' · ')}
-            </p>
-          )}
+
+          <div
+            className={cn(
+              'mt-12 border-t border-rule pt-10',
+              temDescricao && 'lg:grid lg:grid-cols-3 lg:gap-16',
+            )}
+          >
+            {temDescricao && (
+              <p className="whitespace-pre-line font-body text-lg leading-relaxed text-ink-muted lg:col-span-2 lg:text-xl">
+                {projeto.description}
+              </p>
+            )}
+            <FichaTecnica
+              projeto={projeto}
+              secao={secao}
+              emGrade={!temDescricao}
+              className={cn(temDescricao && 'mt-10 lg:mt-0')}
+            />
+          </div>
         </header>
 
         {projeto.coverImage && (
-          <div className="mx-auto mt-10 max-w-6xl px-6 sm:mt-16">
-            <div className="aspect-[16/10] overflow-hidden bg-surface">
-              <ImagemResponsiva imagem={projeto.coverImage} prioridade preencher />
-            </div>
-          </div>
-        )}
-
-        {projeto.description && (
-          <div className="mx-auto max-w-2xl px-6 py-16 sm:py-24">
-            <p className="whitespace-pre-line font-body text-lg leading-relaxed text-ink-muted">
-              {projeto.description}
-            </p>
+          <div className="mx-auto mt-14 max-w-6xl px-6 sm:mt-20">
+            <ImagemResponsiva imagem={projeto.coverImage} prioridade />
           </div>
         )}
 
         {galeria.length > 0 && (
-          <div className="mx-auto max-w-6xl px-6 pb-24">
+          <div className="mx-auto mt-16 max-w-6xl px-6 pb-24 sm:mt-20">
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
               {galeria.map((imagem, indice) => (
                 <button
@@ -168,5 +179,82 @@ function ProjetoPage() {
         onNavegar={setIndiceLightbox}
       />
     </SiteLayout>
+  )
+}
+
+/**
+ * Ficha técnica do projeto: cliente, ano, papel, seção e tags.
+ *
+ * Linha sem valor não é renderizada. `client` e `role` têm `default('')` no
+ * schema, e um rótulo sem valor ao lado só ocupa espaço.
+ */
+function FichaTecnica({
+  projeto,
+  secao,
+  emGrade,
+  className,
+}: {
+  projeto: Project
+  secao: Section | undefined
+  /** Sem descrição ao lado, a ficha ocupa a largura toda em quatro colunas. */
+  emGrade: boolean
+  className?: string
+}) {
+  const linhas = [
+    { rotulo: 'Cliente', valor: projeto.client },
+    { rotulo: 'Ano', valor: projeto.year },
+    { rotulo: 'Papel', valor: projeto.role },
+  ].filter((linha) => linha.valor)
+
+  const classeLinha = cn(
+    'border-b border-rule py-3.5',
+    !emGrade && 'flex items-baseline justify-between gap-4',
+  )
+  const classeRotulo = 'font-body text-xs uppercase tracking-wider text-ink-faint'
+  const classeValor = cn('font-body text-sm text-ink', emGrade ? 'mt-1.5' : 'text-right')
+
+  return (
+    <div className={className}>
+      <dl
+        className={cn(
+          'border-t border-rule',
+          emGrade && 'grid gap-x-8 sm:grid-cols-2 lg:grid-cols-4',
+        )}
+      >
+        {linhas.map((linha) => (
+          <div key={linha.rotulo} className={classeLinha}>
+            <dt className={classeRotulo}>{linha.rotulo}</dt>
+            <dd className={classeValor}>{linha.valor}</dd>
+          </div>
+        ))}
+        {secao && (
+          <div className={classeLinha}>
+            <dt className={classeRotulo}>Seção</dt>
+            <dd className={classeValor}>
+              <Link
+                to="/projetos"
+                search={{ secao: secao.slug }}
+                className="text-brand transition-colors hover:text-ink"
+              >
+                {secao.name}
+              </Link>
+            </dd>
+          </div>
+        )}
+      </dl>
+
+      {projeto.tags.length > 0 && (
+        <ul className="mt-6 flex flex-wrap gap-2">
+          {projeto.tags.map((tag) => (
+            <li
+              key={tag}
+              className="border border-rule px-2.5 py-1.5 font-body text-xs uppercase tracking-wider text-ink-muted"
+            >
+              {tag}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
   )
 }
